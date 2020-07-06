@@ -6,6 +6,7 @@
       <el-button type="primary" @click="insertionSort()">Insertion Sort</el-button>
       <el-button type="primary" @click="selectionSort()">Selection Sort</el-button>
       <el-button type="primary" @click="radixSort()">Radix Sort</el-button>
+      <el-button type="primary" @click="heapSort()">Heap Sort</el-button>
     </el-button-group>
     <el-row>
       <el-button type="info" icon="el-icon-refresh" @click="newDataset()">Reset</el-button>
@@ -149,6 +150,72 @@ export default {
 
       if (foundNum === undefined) return 0;
       else return foundNum;
+    },
+
+    // Heap Sort
+    async heapSort() {
+      // Build our max heap.
+      this.buildMaxHeap(this.dataset);
+
+      // Find last element.
+      let lastElement = this.dataset.length - 1;
+
+      // Continue heap sorting until we have
+      // just one element left in the array.
+      while(lastElement > 0) {
+        await this.swap(this.dataset, 0, lastElement);
+        this.heapify(this.dataset, 0, lastElement);
+        lastElement -= 1
+      }
+    },
+
+    buildMaxHeap(array) {
+      var i;
+      i = array.length / 2 - 1;
+      i = Math.floor(i);
+
+      // Build a max heap out of
+      // all array elements passed in.
+      while (i >= 0) {
+        this.heapify(array, i, array.length);
+        i -= 1;
+      }
+    },
+
+    heapify(heap, i, max) {
+      let index, leftChild, rightChild;
+      
+      while(i < max) {
+        index = i;
+
+        leftChild = 2*i + 1;
+        rightChild = leftChild + 1;
+
+        if (leftChild < max && heap[leftChild] > heap[index]) {
+          index = leftChild;
+        }
+
+        if (rightChild < max && heap[rightChild] > heap[index]) {
+          index = rightChild;
+        }
+          
+        if (index == i) {
+          return;
+        }
+
+        this.swap(heap,i, index);
+        
+        i = index;
+      }
+    },
+
+    async swap(array, firstItemIndex, lastItemIndex) {
+      let tmp = array[firstItemIndex];
+      
+      // Swap first and last items in the array.
+      array[firstItemIndex] = array[lastItemIndex];
+      array[lastItemIndex] = tmp;
+      await this.update(150);
     },
 
     //* Misc
