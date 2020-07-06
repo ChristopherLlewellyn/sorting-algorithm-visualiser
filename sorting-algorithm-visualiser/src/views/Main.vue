@@ -91,9 +91,9 @@ export default {
         //set min to the current iteration of i
         var min = i;
         for(var j = i+1; j < this.dataset.length; j++){
-          await this.update(5);
           if(this.dataset[j] < this.dataset[min]){
           min = j;
+          await this.update(50);
           }
         }
         var temp = this.dataset[i];
