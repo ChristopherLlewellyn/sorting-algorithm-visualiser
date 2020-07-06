@@ -1,9 +1,15 @@
 <template>
   <div>
     <sorting-grid :numbers2dArray="gridValues"/>
-    <el-button @click="bubbleSort()">Bubble Sort</el-button>
-    <el-button @click="insertionSort()">Insertion Sort</el-button>
-    <el-button @click="selectionSort()">Selection Sort</el-button>
+    <el-button-group>
+      <el-button type="primary" @click="bubbleSort()">Bubble Sort</el-button>
+      <el-button type="primary" @click="insertionSort()">Insertion Sort</el-button>
+      <el-button type="primary" @click="selectionSort()">Selection Sort</el-button>
+      <el-button type="primary" @click="radixSort()">Radix Sort</el-button>
+    </el-button-group>
+    <el-row>
+      <el-button type="info" icon="el-icon-refresh" @click="newDataset()">Reset</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -21,7 +27,7 @@ export default {
   }),
 
   created() {
-    this.dataset = this.randomArray(100, 0, 100);
+    this.newDataset();
     this.gridValues = this.convert1dArrayTo2dArray(this.dataset, 10);
   },
 
@@ -33,6 +39,11 @@ export default {
 
   methods: {
     //* Data preparation methods
+    // Generate new dataset
+    newDataset() {
+      this.dataset = this.randomArray(100, 0, 100);
+    },
+
     // Create array of random numbers between min and max
     randomArray(length, min, max) {
       return Array.from({length: length}, () => Math.floor(Math.random() * (max - min) + min));
@@ -93,13 +104,51 @@ export default {
         for(var j = i+1; j < this.dataset.length; j++){
           if(this.dataset[j] < this.dataset[min]){
           min = j;
-          await this.update(50);
           }
         }
         var temp = this.dataset[i];
         this.dataset[i] = this.dataset[min];
         this.dataset[min] = temp;
+        await this.update(200);
       }
+    },
+
+    // Radix Sort
+    async radixSort() {
+      let maxLength = this.largestNum(this.dataset);
+
+      for (let i = 0; i < maxLength; i++) {
+        let buckets = Array.from({ length: 10 }, () => []);
+
+        for (let j = 0; j < this.dataset.length; j++) {
+          let num = this.getNum(this.dataset[j], i);
+          if (num !== undefined) {
+            buckets[num].push(this.dataset[j]);
+          }
+        }
+        await this.update(2000);
+        this.dataset = buckets.flat();
+      }
+    },
+
+    largestNum(arr) {
+      let largest = "0";
+
+      arr.forEach(num => {
+        const strNum = String(num);
+        if (strNum.length > largest.length) largest = strNum;
+      });
+
+      return largest.length;
+    },
+
+    getNum(num, index) {
+      const strNum = String(num);
+      let end = strNum.length - 1;
+      const foundNum = strNum[end - index];
+
+      if (foundNum === undefined) return 0;
+      else return foundNum;
     },
 
     //* Misc
