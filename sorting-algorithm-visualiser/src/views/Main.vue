@@ -7,6 +7,7 @@
       <el-button type="primary" @click="selectionSort()">Selection Sort</el-button>
       <el-button type="primary" @click="radixSort()">Radix Sort</el-button>
       <el-button type="primary" @click="heapSort()">Heap Sort</el-button>
+      <el-button type="primary" @click="handleCountingSort()">Counting Sort</el-button>
     </el-button-group>
     <el-row>
       <el-button type="info" icon="el-icon-refresh" @click="newDataset()">Reset</el-button>
@@ -216,6 +217,33 @@ export default {
       array[firstItemIndex] = array[lastItemIndex];
       array[lastItemIndex] = tmp;
       await this.update(150);
+    },
+
+    // Counting Sort
+    async handleCountingSort() {
+      await this.countingSort(this.dataset, 0, 100);
+    },
+
+    async countingSort(arr, min, max) {
+      let i = min,
+          j = 0,
+          len = arr.length,
+          count = [];
+      for (i; i <= max; i++) {
+          count[i] = 0;
+      }
+      for (i = 0; i < len; i++) {
+          count[arr[i]] += 1;
+      }
+      for (i = min; i <= max; i++) {
+          while (count[i] > 0) {
+              arr[j] = i;
+              j++;
+              count[i]--;
+              await this.update(100);
+          }
+      }
+      return arr;
     },
 
     //* Misc
