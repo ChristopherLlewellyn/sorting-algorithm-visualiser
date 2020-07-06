@@ -2,6 +2,8 @@
   <div>
     <sorting-grid :numbers2dArray="gridValues"/>
     <el-button @click="bubbleSort()">Bubble Sort</el-button>
+    <el-button @click="insertionSort()">Insertion Sort</el-button>
+    <el-button @click="selectionSort()">Selection Sort</el-button>
   </div>
 </template>
 
@@ -53,6 +55,7 @@ export default {
     },
 
     //* Sorting Algorithms
+    // Bubble Sort
     async bubbleSort() {
       let swap;
       do {
@@ -67,6 +70,38 @@ export default {
       } while (swap)
     },
 
+    // Insertion Sort
+    async insertionSort() {
+      let length = this.dataset.length;
+      for (let i = 1; i < length; i++) {
+        let key = this.dataset[i];
+        let j = i - 1;
+        while (j >= 0 && this.dataset[j] > key) {
+          await this.update(5);
+          this.dataset[j + 1] = this.dataset[j];
+          j = j - 1;
+        }
+        this.dataset[j + 1] = key;
+      }
+    },
+
+    // Selection Sort
+    async selectionSort() {
+      for(var i = 0; i < this.dataset.length; i++){
+        //set min to the current iteration of i
+        var min = i;
+        for(var j = i+1; j < this.dataset.length; j++){
+          await this.update(5);
+          if(this.dataset[j] < this.dataset[min]){
+          min = j;
+          }
+        }
+        var temp = this.dataset[i];
+        this.dataset[i] = this.dataset[min];
+        this.dataset[min] = temp;
+      }
+    },
+
     //* Misc
     async update(ms) {
       this.gridValues = this.convert1dArrayTo2dArray(this.dataset, 10);
@@ -76,6 +111,7 @@ export default {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+    
   }
 }
 </script>
