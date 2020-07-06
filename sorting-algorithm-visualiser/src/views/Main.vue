@@ -74,7 +74,7 @@ export default {
       do {
         swap = false;
         for (let i = 1; i < this.dataset.length; ++i) {
-          await this.update(5);
+          await this.update(1);
           if (this.dataset[i - 1] > this.dataset[i]) {
             [this.dataset[i], this.dataset[i - 1]] = [this.dataset[i - 1], this.dataset[i]];
             swap = true;
