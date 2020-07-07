@@ -2,7 +2,7 @@
   <div id="header">
     <div class="inner_header">
       <div class="logo_container">
-        <h1>Sorting Algorithms Visualiser</h1>
+        <h1>Sorting Algorithm Visualiser</h1>
       </div>
 
       <div class="links">
