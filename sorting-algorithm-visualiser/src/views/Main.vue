@@ -16,6 +16,15 @@
           <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
         </el-button-group>
       </el-row>
+      <el-row>
+        <el-slider
+        v-model="gridSize"
+        :min="5"
+        :max="20"
+        :step="1"
+        show-stops>
+      </el-slider>
+      </el-row>
     </div>
   </div>
 </template>
@@ -30,6 +39,7 @@ export default {
 
   data: () => ({
     dataset: null,
+    gridSize: 10,
     gridValues: null,
     selectedAlgorithm: null,
     sorting: false,
@@ -57,12 +67,15 @@ export default {
 
   created() {
     this.newDataset();
-    this.gridValues = this.convert1dArrayTo2dArray(this.dataset, 10);
+    this.gridValues = this.convert1dArrayTo2dArray(this.dataset, this.gridSize);
   },
 
   watch: {
     dataset(newDataset) {
-      this.gridValues = this.convert1dArrayTo2dArray(newDataset, 10);
+      this.gridValues = this.convert1dArrayTo2dArray(newDataset, this.gridSize);
+    },
+    gridSize() {
+      this.newDataset();
     }
   },
 
@@ -110,7 +123,7 @@ export default {
     //* Data preparation methods
     // Generate new dataset
     newDataset() {
-      this.dataset = this.randomArray(100, 0, 100);
+      this.dataset = this.randomArray(this.gridSize * this.gridSize, 0, 100);
       this.sorted = false;
     },
 
@@ -316,7 +329,7 @@ export default {
 
     //* Misc
     async update(ms) {
-      this.gridValues = this.convert1dArrayTo2dArray(this.dataset, 10);
+      this.gridValues = this.convert1dArrayTo2dArray(this.dataset, this.gridSize);
       await this.sleep(ms);
     },
 

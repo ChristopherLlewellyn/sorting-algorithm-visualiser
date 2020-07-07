@@ -1,8 +1,8 @@
 <template>
   <div id="sorting-grid">
-    <el-row v-for="i in 10" :key="'y' + i" type="flex" justify="center">
-      <el-col v-for="j in 10" :key="'x' + j" :span="2.4">
-        <grid-square :value="numbers2dArray[i-1][j-1]" :numberOfGridElements="100"></grid-square>
+    <el-row v-for="i in numbers2dArray.length" :key="'y' + i" type="flex" justify="center">
+      <el-col v-for="j in numbers2dArray.length" :key="'x' + j" :span="2.4">
+        <grid-square :value="numbers2dArray[i-1][j-1]" :gridSize="numbers2dArray.length"></grid-square>
       </el-col>
     </el-row>
 

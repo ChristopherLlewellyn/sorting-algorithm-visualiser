@@ -22,8 +22,10 @@ export default {
 @import "@/scss/_variables.scss";
 
 #app {
-  height: 100vh;
+  height: 100%;
   background-color: $bg-basic-dark;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 #content {
