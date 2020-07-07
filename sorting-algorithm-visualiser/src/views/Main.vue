@@ -2,18 +2,20 @@
   <div>
     <sorting-grid :numbers2dArray="gridValues"/>
 
-    <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
+    <el-row class="mt">
+      <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
       <el-option
         v-for="item in options"
         :key="item.value"
         :label="item.label"
         :value="item.value">
       </el-option>
-    </el-select>
-    <el-button-group>
-      <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
-      <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
-    </el-button-group>
+      </el-select>
+      <el-button-group class="ml">
+        <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
+        <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
+      </el-button-group>
+    </el-row>
   </div>
 </template>
 
@@ -323,7 +325,19 @@ export default {
 </script>
 
 <style>
-el-option {
-  font-family: Arial;
+.ml {
+  margin-left: 16px;
+}
+
+.mr {
+  margin-right: 16px;
+}
+
+.mb {
+  margin-bottom: 16px;
+}
+
+.mt {
+  margin-top: 16px;
 }
 </style>
