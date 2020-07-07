@@ -70,6 +70,10 @@
 .links .link .item {
   display: table-cell;
   vertical-align: middle;
+  color: lightslategrey;
+}
+
+.links .link .item:hover {
   color: white;
 }
 </style>
