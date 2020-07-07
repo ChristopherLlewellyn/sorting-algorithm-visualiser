@@ -1,16 +1,18 @@
 <template>
   <div>
     <sorting-grid :numbers2dArray="gridValues"/>
-    <el-button-group>
-      <el-button type="primary" @click="bubbleSort()">Bubble Sort</el-button>
-      <el-button type="primary" @click="insertionSort()">Insertion Sort</el-button>
-      <el-button type="primary" @click="selectionSort()">Selection Sort</el-button>
-      <el-button type="primary" @click="radixSort()">Radix Sort</el-button>
-      <el-button type="primary" @click="heapSort()">Heap Sort</el-button>
-      <el-button type="primary" @click="handleCountingSort()">Counting Sort</el-button>
-    </el-button-group>
+
+    <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+    <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
     <el-row>
-      <el-button type="info" icon="el-icon-refresh" @click="newDataset()">Reset</el-button>
+      <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
     </el-row>
   </div>
 </template>
@@ -26,6 +28,27 @@ export default {
   data: () => ({
     dataset: null,
     gridValues: null,
+    selectedAlgorithm: null,
+    sorting: false,
+    options: [{
+      value: 'bubble',
+      label: 'Bubble Sort'
+    }, {
+      value: 'insertion',
+      label: 'Insertion Sort'
+    }, {
+      value: 'selection',
+      label: 'Selection Sort'
+    }, {
+      value: 'radix',
+      label: 'Radix Sort'
+    }, {
+      value: 'heap',
+      label: 'Heap Sort'
+    }, {
+      value: 'counting',
+      label: 'Counting Sort'
+    }]
   }),
 
   created() {
@@ -40,6 +63,45 @@ export default {
   },
 
   methods: {
+    //* Sort function
+    async sort() {
+      switch(this.selectedAlgorithm) {
+        case 'bubble':
+          this.sorting = true;
+          await this.bubbleSort();
+          break;
+
+        case 'insertion':
+          this.sorting = true;
+          await this.insertionSort();
+          break;
+
+        case 'selection':
+          this.sorting = true;
+          await this.selectionSort();
+          break;
+
+        case 'radix':
+          this.sorting = true;
+          await this.radixSort();
+          break;
+
+        case 'heap':
+          this.sorting = true;
+          await this.heapSort();
+          break;
+
+        case 'counting':
+          this.sorting = true;
+          await this.handleCountingSort();
+          break;
+
+        default:
+          break;
+      }
+      this.sorting = false;
+    },
+
     //* Data preparation methods
     // Generate new dataset
     newDataset() {
@@ -259,3 +321,9 @@ export default {
   }
 }
 </script>
+
+<style>
+el-option {
+  font-family: Arial;
+}
+</style>

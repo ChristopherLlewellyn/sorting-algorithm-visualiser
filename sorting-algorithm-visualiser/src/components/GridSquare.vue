@@ -35,8 +35,6 @@ export default {
 .grid-content {
   height: 36px;
   width: 36px;
-  font-family: Arial;
-  font-size: 12px;
   text-align: center;
   vertical-align: middle;
   line-height: 36px;
