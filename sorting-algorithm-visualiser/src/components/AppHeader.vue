@@ -2,7 +2,8 @@
   <div id="header">
     <div class="inner_header">
       <div class="logo_container">
-        <h1>Sorting Algorithm Visualiser</h1>
+        <font-awesome-icon class="logo_container_icon" :icon="['fas', 'sort-numeric-down']" size="2x"></font-awesome-icon>
+        <h1 class="logo_container_text">Sorting Algorithm Visualiser</h1>
       </div>
 
       <div class="links">
@@ -46,13 +47,21 @@
   float: left;
 }
 
-.logo_container h1 {
+.logo_container_text {
   color: white;
   height: 100%;
   display: table-cell;
   vertical-align: middle;
-  font-size: 38px;
+  font-size: 34px;
   font-family: 'Source Code Pro', monospace;
+}
+
+.logo_container_icon {
+  color: white;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  margin-right: 20px;
 }
 
 .links {
