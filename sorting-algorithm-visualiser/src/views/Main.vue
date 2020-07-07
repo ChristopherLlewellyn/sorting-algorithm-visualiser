@@ -1,21 +1,22 @@
 <template>
   <div>
-    <sorting-grid :numbers2dArray="gridValues"/>
-
-    <el-row class="mt">
-      <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
-      </el-select>
-      <el-button-group class="ml">
-        <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
-        <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
-      </el-button-group>
-    </el-row>
+    <sorting-grid :numbers2dArray="gridValues" :sorted="sorted" />
+    <div id="controls">
+      <el-row class="mt" type="flex" justify="center">
+        <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+        </el-select>
+        <el-button-group class="ml">
+          <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
+          <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
+        </el-button-group>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
     gridValues: null,
     selectedAlgorithm: null,
     sorting: false,
+    sorted: false,
     options: [{
       value: 'bubble',
       label: 'Bubble Sort'
@@ -102,12 +104,14 @@ export default {
           break;
       }
       this.sorting = false;
+      this.sorted = true;
     },
 
     //* Data preparation methods
     // Generate new dataset
     newDataset() {
       this.dataset = this.randomArray(100, 0, 100);
+      this.sorted = false;
     },
 
     // Create array of random numbers between min and max
