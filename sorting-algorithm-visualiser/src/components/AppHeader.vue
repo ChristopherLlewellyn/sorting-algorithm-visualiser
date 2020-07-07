@@ -2,7 +2,7 @@
   <div id="header">
     <div class="inner_header">
       <div class="logo_container">
-        <font-awesome-icon class="logo_container_icon" :icon="['fas', 'sort-numeric-down']" size="2x"></font-awesome-icon>
+        <font-awesome-icon class="logo_container_icon" :icon="['fas', 'robot']" size="2x"></font-awesome-icon>
         <h1 class="logo_container_text">Sorting Algorithm Visualiser</h1>
       </div>
 
