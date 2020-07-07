@@ -33,10 +33,10 @@ export default {
 
 <style>
 .grid-content {
-  height: 36px;
-  width: 36px;
+  height: 50px;
+  width: 50px;
   text-align: center;
   vertical-align: middle;
-  line-height: 36px;
+  line-height: 50px;
 }
 </style>

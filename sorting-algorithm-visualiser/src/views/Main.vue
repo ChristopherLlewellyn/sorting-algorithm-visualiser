@@ -10,10 +10,10 @@
         :value="item.value">
       </el-option>
     </el-select>
-    <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
-    <el-row>
+    <el-button-group>
+      <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
       <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
-    </el-row>
+    </el-button-group>
   </div>
 </template>
 
