@@ -13,17 +13,22 @@
         </el-select>
         <el-button-group class="ml">
           <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
-          <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
+          <el-button type="primary" :loading="sorting ? true : false" :disabled="selectedAlgorithm == null || sorted ? true : false" @click="sort()">{{ sorting ? 'Sorting' : 'Sort' }}</el-button>
         </el-button-group>
       </el-row>
-      <el-row>
+      <el-row class="mt">
         <el-slider
-        v-model="gridSize"
-        :min="5"
-        :max="20"
-        :step="1"
-        show-stops>
-      </el-slider>
+          v-model="gridSize"
+          :min="5"
+          :max="20"
+          :step="1"
+          show-stops
+          :disabled="sorting ? true : false"
+        >
+        </el-slider>
+      </el-row>
+      <el-row class="mt" type="flex" justify="center">
+        <span class="source-code-text">{{ gridSize + ' x ' + gridSize }}</span>
       </el-row>
     </div>
   </div>
@@ -342,6 +347,12 @@ export default {
 </script>
 
 <style>
+.source-code-text {
+  font-size: 20px;
+  font-family: 'Source Code Pro', monospace;
+  color: white;
+}
+
 .ml {
   margin-left: 16px;
 }
