@@ -68,7 +68,7 @@ export default {
     },
 
     //* Sorting Algorithms
-    // Bubble Sort
+    //! Bubble Sort
     async bubbleSort() {
       let swap;
       do {
@@ -83,7 +83,7 @@ export default {
       } while (swap)
     },
 
-    // Insertion Sort
+    //! Insertion Sort
     async insertionSort() {
       let length = this.dataset.length;
       for (let i = 1; i < length; i++) {
@@ -98,7 +98,7 @@ export default {
       }
     },
 
-    // Selection Sort
+    //! Selection Sort
     async selectionSort() {
       for(var i = 0; i < this.dataset.length; i++){
         //set min to the current iteration of i
@@ -115,7 +115,7 @@ export default {
       }
     },
 
-    // Radix Sort
+    //! Radix Sort
     async radixSort() {
       let maxLength = this.largestNum(this.dataset);
 
@@ -153,7 +153,7 @@ export default {
       else return foundNum;
     },
 
-    // Heap Sort
+    //! Heap Sort
     async heapSort() {
       // Build our max heap.
       this.buildMaxHeap(this.dataset);
@@ -219,7 +219,7 @@ export default {
       await this.update(150);
     },
 
-    // Counting Sort
+    //! Counting Sort
     async handleCountingSort() {
       await this.countingSort(this.dataset, 0, 100);
     },
