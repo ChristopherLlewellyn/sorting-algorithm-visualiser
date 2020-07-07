@@ -9,7 +9,7 @@
     <el-row type="flex" justify="center">
       <div class="sorted-notifier">
         <el-row type="flex" justify="center">
-          <img :src="sorted ? require('@/assets/happy.gif') : require('@/assets/sad.gif')" alt="sad face" height="60px" width="60px"/>
+          <img v-if="sorted" :src="require('@/assets/happy.gif')" alt="sad face" height="80px" width="80px"/>
         </el-row>
         <span class="text" :style="{ color: sorted ? 'lightgreen' : 'lightcoral' }">
           {{ sorted ? 'Sorted' : 'Unsorted'}}
