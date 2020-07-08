@@ -3,13 +3,21 @@
     <sorting-grid :numbers2dArray="gridValues" :sorted="sorted" />
     <div id="controls">
       <el-row class="mt" type="flex" justify="center">
-        <el-select v-model="selectedAlgorithm" placeholder="Select Algorithm">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-select class="mr" v-model="selectedAlgorithm" placeholder="Select Algorithm">
+          <el-option
+            v-for="item in sortOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="selectedSpeed" placeholder="Speed">
+          <el-option
+            v-for="item in speedOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
         <el-button-group class="ml">
           <el-button type="info" icon="el-icon-refresh" :disabled="sorting ? true : false" @click="newDataset()">Reset</el-button>
@@ -47,9 +55,10 @@ export default {
     gridSize: 10,
     gridValues: null,
     selectedAlgorithm: null,
+    selectedSpeed: 'very fast',
     sorting: false,
     sorted: false,
-    options: [{
+    sortOptions: [{
       value: 'bubble',
       label: 'Bubble Sort'
     }, {
@@ -67,6 +76,22 @@ export default {
     }, {
       value: 'counting',
       label: 'Counting Sort'
+    }],
+    speedOptions: [{
+      value: 'very fast',
+      label: 'Very Fast'
+    }, {
+      value: 'fast',
+      label: 'Fast'
+    }, {
+      value: 'medium',
+      label: 'Medium'
+    }, {
+      value: 'slow',
+      label: 'Slow'
+    }, {
+      value: 'very slow',
+      label: 'Very Slow'
     }]
   }),
 
@@ -81,6 +106,63 @@ export default {
     },
     gridSize() {
       this.newDataset();
+    }
+  },
+
+  computed: {
+    updateSpeed() {
+      let speed;
+      switch(this.selectedSpeed) {
+        case 'very fast':
+          if (this.selectedAlgorithm == 'bubble') speed = 1;
+          else if (this.selectedAlgorithm == 'insertion') speed = 1;
+          else if (this.selectedAlgorithm == 'selection') speed = 1;
+          else if (this.selectedAlgorithm == 'radix') speed = 500;
+          else if (this.selectedAlgorithm == 'heap') speed = 1;
+          else if (this.selectedAlgorithm == 'counting') speed = 10;
+          break;
+
+        case 'fast':
+          if (this.selectedAlgorithm == 'bubble') speed = 20;
+          else if (this.selectedAlgorithm == 'insertion') speed = 20;
+          else if (this.selectedAlgorithm == 'selection') speed = 20;
+          else if (this.selectedAlgorithm == 'radix') speed = 1000;
+          else if (this.selectedAlgorithm == 'heap') speed = 20;
+          else if (this.selectedAlgorithm == 'counting') speed = 40;
+          break;
+
+        case 'medium':
+          if (this.selectedAlgorithm == 'bubble') speed = 50;
+          else if (this.selectedAlgorithm == 'insertion') speed = 50;
+          else if (this.selectedAlgorithm == 'selection') speed = 50;
+          else if (this.selectedAlgorithm == 'radix') speed = 1500;
+          else if (this.selectedAlgorithm == 'heap') speed = 50;
+          else if (this.selectedAlgorithm == 'counting') speed = 80;
+          break;
+
+        case 'slow':
+          if (this.selectedAlgorithm == 'bubble') speed = 70;
+          else if (this.selectedAlgorithm == 'insertion') speed = 70;
+          else if (this.selectedAlgorithm == 'selection') speed = 70;
+          else if (this.selectedAlgorithm == 'radix') speed = 2000;
+          else if (this.selectedAlgorithm == 'heap') speed = 70;
+          else if (this.selectedAlgorithm == 'counting') speed = 150;
+          break;
+
+        case 'very slow':
+          if (this.selectedAlgorithm == 'bubble') speed = 100;
+          else if (this.selectedAlgorithm == 'insertion') speed = 100;
+          else if (this.selectedAlgorithm == 'selection') speed = 100;
+          else if (this.selectedAlgorithm == 'radix') speed = 2500;
+          else if (this.selectedAlgorithm == 'heap') speed = 100;
+          else if (this.selectedAlgorithm == 'counting') speed = 200;
+          break;
+        
+        default:
+          speed = 1;
+          break;
+      }
+      return speed;
     }
   },
 
@@ -160,7 +242,7 @@ export default {
       do {
         swap = false;
         for (let i = 1; i < this.dataset.length; ++i) {
-          await this.update(1);
+          await this.update(this.updateSpeed);
           if (this.dataset[i - 1] > this.dataset[i]) {
             [this.dataset[i], this.dataset[i - 1]] = [this.dataset[i - 1], this.dataset[i]];
             swap = true;
@@ -176,7 +258,7 @@ export default {
         let key = this.dataset[i];
         let j = i - 1;
         while (j >= 0 && this.dataset[j] > key) {
-          await this.update(5);
+          await this.update(this.updateSpeed);
           this.dataset[j + 1] = this.dataset[j];
           j = j - 1;
         }
@@ -197,7 +279,7 @@ export default {
         var temp = this.dataset[i];
         this.dataset[i] = this.dataset[min];
         this.dataset[min] = temp;
-        await this.update(200);
+        await this.update(this.updateSpeed);
       }
     },
 
@@ -214,8 +296,8 @@ export default {
             buckets[num].push(this.dataset[j]);
           }
         }
-        await this.update(2000);
         this.dataset = buckets.flat();
+        await this.update(this.updateSpeed);
       }
     },
 
@@ -302,7 +384,7 @@ export default {
       // Swap first and last items in the array.
       array[firstItemIndex] = array[lastItemIndex];
       array[lastItemIndex] = tmp;
-      await this.update(50);
+      await this.update(this.updateSpeed);
     },
 
     //! Counting Sort
@@ -326,7 +408,7 @@ export default {
               arr[j] = i;
               j++;
               count[i]--;
-              await this.update(100);
+              await this.update(this.updateSpeed);
           }
       }
       return arr;
