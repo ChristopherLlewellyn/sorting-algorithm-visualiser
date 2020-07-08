@@ -242,7 +242,7 @@ export default {
     //! Heap Sort
     async heapSort() {
       // Build our max heap.
-      this.buildMaxHeap(this.dataset);
+      await this.buildMaxHeap(this.dataset);
 
       // Find last element.
       let lastElement = this.dataset.length - 1;
@@ -251,12 +251,12 @@ export default {
       // just one element left in the array.
       while(lastElement > 0) {
         await this.swap(this.dataset, 0, lastElement);
-        this.heapify(this.dataset, 0, lastElement);
+        await this.heapify(this.dataset, 0, lastElement);
         lastElement -= 1
       }
     },
 
-    buildMaxHeap(array) {
+    async buildMaxHeap(array) {
       var i;
       i = array.length / 2 - 1;
       i = Math.floor(i);
@@ -264,12 +264,12 @@ export default {
       // Build a max heap out of
       // all array elements passed in.
       while (i >= 0) {
-        this.heapify(array, i, array.length);
+        await this.heapify(array, i, array.length);
         i -= 1;
       }
     },
 
-    heapify(heap, i, max) {
+    async heapify(heap, i, max) {
       let index, leftChild, rightChild;
       
       while(i < max) {
@@ -290,7 +290,7 @@ export default {
           return;
         }
 
-        this.swap(heap,i, index);
+        await this.swap(heap,i, index);
         
         i = index;
       }
@@ -302,7 +302,7 @@ export default {
       // Swap first and last items in the array.
       array[firstItemIndex] = array[lastItemIndex];
       array[lastItemIndex] = tmp;
-      await this.update(150);
+      await this.update(50);
     },
 
     //! Counting Sort
