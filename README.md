@@ -4,7 +4,7 @@
 
 Visualise some common sorting algorithms on a colourful, re-sizable grid. 
 
-Built with ❤️ using [Vue.js](https://vuejs.org/).
+Built with [Vue.js](https://vuejs.org/).
 
 ## Features
 * 🔥 Colourful, visually stimulating grid
